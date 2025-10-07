@@ -14,9 +14,9 @@ class Casse_briques:
         self.bouton.grid(row = 2, column = 1)
         root.mainloop()
 
-
-'''    def __objet__(self):
-        self.brique = tk.create_rectangle(width = 90, height = 30, bg = 'green')'''
+'''class Raquette:
+    def __objet__(self):
+        self.raquette = tk.Canvas.create_rectangle(Casse_briques.canvas, width = 50, height = 20)'''
  
 if __name__ == "__main__" :
     app = Casse_briques()
