@@ -14,9 +14,6 @@ class Casse_briques:
         self.bouton.grid(row = 2, column = 1)
         root.mainloop()
 
-
-'''    def __objet__(self):
-        self.brique = tk.create_rectangle(width = 90, height = 30, bg = 'green')'''
  
 if __name__ == "__main__" :
     app = Casse_briques()

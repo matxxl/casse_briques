@@ -9,9 +9,3 @@ class Brique :
         self.hits = hits
         self.couleur = Brique.couleur_brique
 
-    def display(self):
-        fill(self.couleur)
-        stroke("black")
-        strokeWeight(2)
-        rect(self.position.x, self.position.y, self.width, self.height)
-        
