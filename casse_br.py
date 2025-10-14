@@ -1,68 +1,8 @@
 import tkinter as tk
 import random
-
-class Balle:
-    def __init__(self, canvas, x, y, rayon, couleur, vx=5, vy=-5):
-        self.canvas = canvas
-        self.id = canvas.create_oval(x-rayon, y-rayon, x+rayon, y+rayon, fill=couleur)
-        self.vx = vx
-        self.vy = vy
-        self.rayon = rayon
-
-    def deplacer(self):
-        self.canvas.move(self.id, self.vx, self.vy)
-        self.verifier_collisions_bords()
-
-    def coords(self):
-        return self.canvas.coords(self.id)
-
-    def inverser_vx(self):
-        self.vx = -self.vx
-
-    def inverser_vy(self):
-        self.vy = -self.vy
-
-    def verifier_collisions_bords(self):
-        x1, y1, x2, y2 = self.coords()
-        if x1 <= 0 or x2 >= self.canvas.winfo_width():
-            self.inverser_vx()
-        if y1 <= 0:
-            self.inverser_vy()
-
-
-class Pad:
-    def __init__(self, canvas, x, y, largeur, hauteur, couleur):
-        self.canvas = canvas
-        self.id = canvas.create_rectangle(x, y, x+largeur, y+hauteur, fill=couleur)
-        self.largeur = largeur
-        self.hauteur = hauteur
-        self.vitesse = 40
-        self.canvas.bind_all("<Left>", self.deplacer_gauche)
-        self.canvas.bind_all("<Right>", self.deplacer_droite)
-
-    def deplacer_gauche(self, event=None):
-        if self.canvas.coords(self.id)[0] > 0:
-            self.canvas.move(self.id, -self.vitesse, 0)
-
-    def deplacer_droite(self, event=None):
-        if self.canvas.coords(self.id)[2] < self.canvas.winfo_width():
-            self.canvas.move(self.id, self.vitesse, 0)
-
-    def coords(self):
-        return self.canvas.coords(self.id)
-
-
-class Brique:
-    def __init__(self, canvas, x, y, largeur, hauteur, couleur):
-        self.canvas = canvas
-        self.id = canvas.create_rectangle(x, y, x+largeur, y+hauteur, fill=couleur)
-        self.vie = 1
-
-    def detruire(self):
-        self.canvas.delete(self.id)
-
-    def coords(self):
-        return self.canvas.coords(self.id)  # Ajouté pour retourner les coordonnées
+from balle import *
+from pad import *
+from brique import *
 
 
 class Casse_briques:
@@ -94,7 +34,7 @@ class Casse_briques:
         couleurs = ["red", "orange", "yellow", "green"]
         for i in range(5):
             for j in range(10):
-                brique = Brique(self.canvas, 10+j*85, 30+i*25, 80, 20, random.choice(couleurs))
+                brique = Brique(self.canvas, 10+j*85, 30+i*25, 80, 20, couleurs[J%len(couleurs)])
                 self.briques.append(brique)
 
     def verifier_collision(self, obj):
