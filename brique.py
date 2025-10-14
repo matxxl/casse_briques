@@ -1,6 +1,6 @@
 class Brique:
     
-    def __init__(self, canvas, x, y, width, height, color="#FF0000", hits=1):
+    def __init__(self, canvas, x, y, width, height, color="#FF0000FF", hits=1):
         
         self.canvas = canvas          
         self.x = x                    
@@ -27,7 +27,7 @@ class Brique:
     def update_color(self):
         """Optionnel : change la couleur selon les hits restants."""
         colors = {1: "red", 2: "orange", 3: "yellow"}
-        self.canvas.itemconfig(self.id, fill=colors.get(self.hits, "#848484"))
+        self.canvas.itemconfig(self.id, fill=colors.get(self.hits, "#828282"))
 
     def destroy(self):
         """Supprime la brique du canvas."""

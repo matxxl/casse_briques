@@ -36,7 +36,7 @@ class Pad:
         self.id = canvas.create_rectangle(x, y, x+largeur, y+hauteur, fill=couleur)
         self.largeur = largeur
         self.hauteur = hauteur
-        self.vitesse = 20
+        self.vitesse = 40
         self.canvas.bind_all("<Left>", self.deplacer_gauche)
         self.canvas.bind_all("<Right>", self.deplacer_droite)
 
@@ -62,7 +62,7 @@ class Brique:
         self.canvas.delete(self.id)
 
     def coords(self):
-        return self.canvas.coords(self.id)  # <-- Ajouté pour retourner les coordonnées
+        return self.canvas.coords(self.id)  # Ajouté pour retourner les coordonnées
 
 
 class Casse_briques:
@@ -75,13 +75,13 @@ class Casse_briques:
         self.label_vies.grid(row=0, column=1)
         self.label_score = tk.Label(self.root, text="Score : 0", fg='white', bg='black')
         self.label_score.grid(row=0, column=0)
-        self.bouton = tk.Button(self.root, text="Quitter", command=self.root.destroy)
-        self.bouton.grid(row=2, column=1)
+        self.bouton_quitter = tk.Button(self.root, text="Quitter", command=self.root.destroy)
+        self.bouton_quitter.grid(row=2, column=1)
 
         # Initialisation jeu
         self.vies = 3
         self.score = 0
-        self.balle = Balle(self.canvas, 450, 400, 10, "white")
+        self.balle = Balle(self.canvas, 450, 400, 10, "#FFFFFF")
         self.pad = Pad(self.canvas, 400, 450, 100, 10, "blue")
         self.briques = []
         self.creer_briques()
@@ -127,7 +127,7 @@ class Casse_briques:
                 self.balle.vx = 5
                 self.balle.vy = -5
             else:
-                self.canvas.create_text(450, 250, text="GAME OVER", fill="white", font=("Arial", 30))
+                self.canvas.create_text(450, 250, text="Tu as perdu !", fill="white", font=("Helvetica", 30))
                 return
 
         # Relancer la boucle
