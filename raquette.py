@@ -7,12 +7,12 @@ class Raquette:
         self.canvas = canvas
         self.raquette = canvas.create_rectangle(self.x, self.y, self.x + 100, self.y +15, fill = 'orange')
     
-    def left(self, event):
+    def déplacer_gauche(self, event):
         x = -10
         y=0
         self.canvas.move(self.raquette, x, y)
     
-    def right(self, event):
+    def déplacer_droite(self, event):
         x = 10
         y = 0
         self.canvas.move(self.raquette, x, y)

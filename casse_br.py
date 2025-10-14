@@ -75,8 +75,11 @@ class Casse_briques:
             if self.vies > 0:
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
-                self.balle.vx = 5*(1+rd(0,1))  # Vitesse horizontale aléatoire
-                self.balle.vy = -5*(1+rd(0,1))  # Vitesse verticale aléatoire
+                self.balle.vx = 5*(1+random.random())  # Vitesse horizontale aléatoire
+                self.balle.vy = -5*(1+random.random()) # Vitesse verticale aléatoire
+            elif self.score == 500:
+                self.canvas.create_text(450, 250, text="Tu as gagné !", fill="white", font=("Helvetica", 30))
+                return
             else:
                 self.canvas.create_text(450, 250, text="Tu as perdu !", fill="white", font=("Helvetica", 30))
                 return
