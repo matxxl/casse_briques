@@ -4,7 +4,6 @@ from balle import *
 from pad import *
 from brique import *
 
-
 class Casse_briques:
     def __init__(self):
         self.root = tk.Tk()
@@ -34,7 +33,7 @@ class Casse_briques:
         couleurs = ["red", "orange", "yellow", "green"]
         for i in range(5):
             for j in range(10):
-                brique = Brique(self.canvas, 10+j*85, 30+i*25, 80, 20, couleurs[J%len(couleurs)])
+                brique = Brique(self.canvas, 10+j*85, 30+i*25, 80, 20, random.choice(couleurs))
                 self.briques.append(brique)
 
     def verifier_collision(self, obj):
