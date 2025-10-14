@@ -1,10 +1,18 @@
-import tkinter as tk
+from tkinter import *
 
 class Raquette:
-    def __objet__(self):
-                root = tk.Tk()
-                root.title('raquette')
-                self.raquette = tk.Canvas.create_rectangle(root, width = 50, height = 20)
-                root.mainloop()
-
-app = Raquette()
+    def __init__(self, canvas):
+        self.x = 450
+        self.y = 400
+        self.canvas = canvas
+        self.raquette = canvas.create_rectangle(self.x, self.y, self.x + 100, self.y +15, fill = 'orange')
+    
+    def left(self, event):
+        x = -10
+        y=0
+        self.canvas.move(self.raquette, x, y)
+    
+    def right(self, event):
+        x = 10
+        y = 0
+        self.canvas.move(self.raquette, x, y)
