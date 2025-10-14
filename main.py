@@ -14,8 +14,8 @@ class Casse_briques:
         self.bouton = tk.Button(root, text = "Quitter", command = root.destroy)
         self.bouton.grid(row = 2, column = 1)
         self.raquette = rq.Raquette(self.canvas)
-        root.bind("<Left>", self.raquette.left)
-        root.bind("<Right>", self.raquette.right)
+        root.bind("<Left>", self.raquette.left1)
+        root.bind("<Right>", self.raquette.right1)
         root.mainloop()
 
  
