@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+from random import randint
 from balle import *
 from pad import *
 from brique import *
@@ -37,9 +38,20 @@ class Casse_briques:
                 self.briques.append(brique)
 
     def verifier_collision(self, obj):
+        # coordonnées de la balle
         x1, y1, x2, y2 = self.balle.coords()
+        rayon = self.balle.rayon
+
+        # on considère le centre et le rayon
+        cx = (x1 + x2) / 2
+        cy = (y1 + y2) / 2
+
+        # coordonnées de l'objet
         x3, y3, x4, y4 = obj.coords()
-        return not (x2 < x3 or x1 > x4 or y2 < y3 or y1 > y4)
+
+        # collision si le cercle touche le rectangle
+        return not (cx + rayon < x3 or cx - rayon > x4 or cy + rayon < y3 or cy - rayon > y4)
+
 
     def jouer(self):
         self.balle.deplacer()
@@ -63,8 +75,8 @@ class Casse_briques:
             if self.vies > 0:
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
-                self.balle.vx = 5
-                self.balle.vy = -5
+                self.balle.vx = 5*(1+rd(0,1))  # Vitesse horizontale aléatoire
+                self.balle.vy = -5*(1+rd(0,1))  # Vitesse verticale aléatoire
             else:
                 self.canvas.create_text(450, 250, text="Tu as perdu !", fill="white", font=("Helvetica", 30))
                 return
