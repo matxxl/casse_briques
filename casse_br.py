@@ -78,9 +78,17 @@ class Casse_briques:
 
         # Balle tombée
         if self.balle.coords()[3] >= self.canvas.winfo_height():
-            self.vies -= 1
-            self.label_vies.config(text = f"Vies : {self.vies}")
-            if self.vies > -1:
+            # Mettre à jour le compteur
+            if self.vies >= 0 :
+                self.vies -= 1
+                self.label_vies.config(text = f"Vies : {self.vies}")
+            # Ne pas avoir un score négatif
+            elif self.vies <= -1 :
+                self.label_vies.config(text = "Vies : 0")
+            
+            
+            
+            if self.vies >= 0 :
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
                 self.balle.vx = 2.5 * (1 + random.random())  # Vitesse horizontale aléatoire
@@ -89,6 +97,7 @@ class Casse_briques:
                 self.message_1 = self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
                 return
             else:
+                self.label_vies.config(text = "Vies : 0")
                 self.message_2 = self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
                 return
 
@@ -99,8 +108,8 @@ class Casse_briques:
         # Réinitialiser les variables du jeu
         self.vies = 3
         self.score = 0
-        self.label_vies.config(text = "Vies : 3")
-        self.label_score.config(text = "Score : 0")
+        self.label_vies.config(text = f"Vies : {self.vies}")
+        self.label_score.config(text=f"Score : {self.score}")
 
         # Réinitialiser la balle
         self.canvas.coords(self.balle.id, 440, 390, 460, 410)
