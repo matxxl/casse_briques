@@ -22,7 +22,7 @@ class Casse_briques:
         self.vies = 3
         self.score = 0
         self.balle = Balle(self.canvas, 450, 400, 10, "#FFFFFF")
-        self.pad = Pad(self.canvas, 400, 450, 100, 10, "blue")
+        self.pad = Pad(self.canvas, 400, 450, 150, 7, "blue")
         self.briques = []
         self.creer_briques()
 
@@ -31,7 +31,7 @@ class Casse_briques:
         self.root.mainloop()
 
     def creer_briques(self):
-        couleurs = ["red", "orange", "yellow", "green", "black", "blue"]
+        couleurs = ["red", "orange", "yellow", "green", "blue"]
         for i in range(5):
             for j in range(10):
                 brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 83, 23, random.choice(couleurs))
