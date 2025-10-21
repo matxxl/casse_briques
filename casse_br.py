@@ -30,8 +30,9 @@ class Casse_briques:
         self.briques = []
         self.creer_briques()
 
-        # Boucle principale
-        self.jouer()
+        # Boucle principale lancée si le bouton jouer est cliqué
+        if self.bouton_jouer == True :
+                self.jouer()
         self.root.mainloop()
 
     def creer_briques(self):
@@ -58,6 +59,7 @@ class Casse_briques:
 
 
     def jouer(self):
+        
         self.balle.deplacer()
                 
         # Collision avec le pad     
