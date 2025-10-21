@@ -2,7 +2,7 @@ import random as rd
 from math import sqrt
 
 class Balle:
-    def __init__(self, canvas, x, y, rayon, couleur, vx=5, vy=-5):
+    def __init__(self, canvas, x, y, rayon, couleur, vx = 5 * rd.random(), vy = -5 * rd.random()):
         self.canvas = canvas
         self.id = canvas.create_oval(x-rayon, y-rayon, x+rayon, y+rayon, fill=couleur)
         self.vx = vx
