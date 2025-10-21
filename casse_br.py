@@ -22,7 +22,7 @@ class Casse_briques:
         self.vies = 3
         self.score = 0
         self.balle = Balle(self.canvas, 450, 400, 10, "#FFFFFF")
-        self.pad = Pad(self.canvas, 400, 450, 150, 7, "blue")
+        self.pad = Pad(self.canvas, 400, 450, 150, 7, "#00FFC8")
         self.briques = []
         self.creer_briques()
 
@@ -76,8 +76,8 @@ class Casse_briques:
             if self.vies > -1:
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
-                self.balle.vx = 5*(1+random.random())  # Vitesse horizontale aléatoire
-                self.balle.vy = -5*(1+random.random()) # Vitesse verticale aléatoire
+                self.balle.vx = 2.5 * (1 + random.random())  # Vitesse horizontale aléatoire
+                self.balle.vy = -2.5 * (1 + random.random()) # Vitesse verticale aléatoire
             elif self.score == 500:
                 self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
                 return
@@ -86,7 +86,7 @@ class Casse_briques:
                 return
 
         # Relancer la boucle
-        self.root.after(20, self.jouer)
+        self.root.after(10, self.jouer)
 
 
 if __name__ == "__main__":
