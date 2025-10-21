@@ -15,8 +15,12 @@ class Casse_briques:
         self.label_vies.grid(row = 0, column = 1)
         self.label_score = tk.Label(self.root, text = "Score : 0", fg = 'black', bg = 'white')
         self.label_score.grid(row = 0, column = 0)
+        self.bouton_rejouer = tk.Button(self.root, text = "Rejouer", command = self.rejouer)
+        self.bouton_rejouer.grid(row = 3, column = 0)
         self.bouton_quitter = tk.Button(self.root, text = "Quitter", command = self.root.destroy)
-        self.bouton_quitter.grid(row = 2, column = 1)
+        self.bouton_quitter.grid(row = 3, column = 1)
+        self.bouton_jouer = tk.Button(self.root, text = "Jouer", command = self.jouer)
+        self.bouton_jouer.grid(row = 3, column = 2)
 
         # Initialisation jeu
         self.vies = 3
@@ -72,7 +76,7 @@ class Casse_briques:
         # Balle tombée
         if self.balle.coords()[3] >= self.canvas.winfo_height():
             self.vies -= 1
-            self.label_vies.config(text=f"Vies : {self.vies}")
+            self.label_vies.config(text = f"Vies : {self.vies}")
             if self.vies > -1:
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
@@ -88,6 +92,26 @@ class Casse_briques:
         # Relancer la boucle
         self.root.after(10, self.jouer)
 
+    def rejouer(self):
+        # Réinitialiser les variables du jeu
+        self.vies = 3
+        self.score = 0
+        self.label_vies.config(text = "Vies : 3")
+        self.label_score.config(text = "Score : 0")
+
+        # Réinitialiser la balle
+        self.canvas.coords(self.balle.id, 440, 390, 460, 410)
+        self.balle.vx = 2.5 * (1 + random.random())
+        self.balle.vy = -2.5 * (1 + random.random())
+
+        # Réinitialiser les briques
+        for brique in self.briques:
+            brique.detruire()
+        self.briques.clear()
+        self.creer_briques()
 
 if __name__ == "__main__":
     app = Casse_briques()
+
+
+
