@@ -31,7 +31,7 @@ class Casse_briques:
         self.root.mainloop()
 
     def creer_briques(self):
-        couleurs = ["red", "orange", "yellow", "green", "black", "blue"]
+        couleurs = ["red", "orange", "yellow", "green", "blue"]
         for i in range(5):
             for j in range(10):
                 brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 83, 23, random.choice(couleurs))
@@ -42,30 +42,58 @@ class Casse_briques:
         x1, y1, x2, y2 = self.balle.coords()
         rayon = self.balle.rayon
 
-        # on considère le centre et le rayon
+        # centre de la balle
         cx = (x1 + x2) / 2
         cy = (y1 + y2) / 2
 
-        # coordonnées de l'objet
+        # coordonnées de l'objet (rectangle)
         x3, y3, x4, y4 = obj.coords()
 
-        # collision si le cercle touche le rectangle
-        return not (cx + rayon < x3 or cx - rayon > x4 or cy + rayon < y3 or cy - rayon > y4)
+        # centre et demi-dimensions du rectangle
+        rx = (x3 + x4) / 2
+        ry = (y3 + y4) / 2
+        half_w = (x4 - x3) / 2
+        half_h = (y4 - y3) / 2
+
+        # distances absolues entre centres
+        dx = abs(cx - rx)
+        dy = abs(cy - ry)
+
+        # chevauchement sur chaque axe, si positif il y a collision
+        chevauch_x = rayon + half_w - dx
+        chevauch_y = rayon + half_h - dy
+
+        if chevauch_x > 0 and chevauch_y > 0:
+            # collision détectée ; déterminer l'axe principal de pénétration
+            # si la pénétration en x est plus petite, la collision est latérale (inverser vx)
+            if chevauch_x < chevauch_y:
+                return True, 'x'
+            else:
+                return True, 'y'
+        return False, None
 
 
     def jouer(self):
         self.balle.deplacer()
         # Collision avec le pad
-        if self.verifier_collision(self.pad):
-            self.balle.inverser_vy()
-            self.balle.augmenter_vitesse()
+        collision, axis = self.verifier_collision(self.pad)
+        if collision:
+            if axis == 'x':
+                self.balle.inverser_vx()
+            else:
+                self.balle.inverser_vy()
+                self.balle.augmenter_vitesse()
 
         # Collision avec les briques
         for brique in self.briques[:]:
-            if self.verifier_collision(brique):
+            collision, axis = self.verifier_collision(brique)
+            if collision:
                 brique.detruire()
                 self.briques.remove(brique)
-                self.balle.inverser_vy()
+                if axis == 'x':
+                    self.balle.inverser_vx()
+                else:
+                    self.balle.inverser_vy()
                 self.score += 10
                 self.label_score.config(text=f"Score : {self.score}")
 
