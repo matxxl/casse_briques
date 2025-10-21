@@ -9,14 +9,14 @@ class Casse_briques:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Casse Briques")
-        self.canvas = tk.Canvas(self.root, width=900, height=500, bg='black')
-        self.canvas.grid(row=1, column=0, columnspan=3)
-        self.label_vies = tk.Label(self.root, text="Vies : 3", fg='black', bg='white')
-        self.label_vies.grid(row=0, column=1)
-        self.label_score = tk.Label(self.root, text="Score : 0", fg='black', bg='white')
-        self.label_score.grid(row=0, column=0)
-        self.bouton_quitter = tk.Button(self.root, text="Quitter", command=self.root.destroy)
-        self.bouton_quitter.grid(row=2, column=1)
+        self.canvas = tk.Canvas(self.root, width = 900, height = 500, bg = 'black')
+        self.canvas.grid(row = 1, column = 0, columnspan = 3)
+        self.label_vies = tk.Label(self.root, text = "Vies : 3", fg = 'black', bg = 'white')
+        self.label_vies.grid(row = 0, column = 1)
+        self.label_score = tk.Label(self.root, text = "Score : 0", fg = 'black', bg = 'white')
+        self.label_score.grid(row = 0, column = 0)
+        self.bouton_quitter = tk.Button(self.root, text = "Quitter", command = self.root.destroy)
+        self.bouton_quitter.grid(row = 2, column = 1)
 
         # Initialisation jeu
         self.vies = 3
@@ -31,7 +31,7 @@ class Casse_briques:
         self.root.mainloop()
 
     def creer_briques(self):
-        couleurs = ["red", "orange", "yellow", "green"]
+        couleurs = ["red", "orange", "yellow", "green", "black", "blue"]
         for i in range(5):
             for j in range(10):
                 brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 83, 23, random.choice(couleurs))
@@ -79,10 +79,10 @@ class Casse_briques:
                 self.balle.vx = 5*(1+random.random())  # Vitesse horizontale aléatoire
                 self.balle.vy = -5*(1+random.random()) # Vitesse verticale aléatoire
             elif self.score == 500:
-                self.canvas.create_text(450, 250, text="Tu as gagné !", fill="white", font=("Helvetica", 30))
+                self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
                 return
             else:
-                self.canvas.create_text(450, 250, text="Tu as perdu !", fill="white", font=("Helvetica", 30))
+                self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
                 return
 
         # Relancer la boucle
