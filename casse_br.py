@@ -11,9 +11,9 @@ class Casse_briques:
         self.root.title("Casse Briques")
         self.canvas = tk.Canvas(self.root, width=900, height=500, bg='black')
         self.canvas.grid(row=1, column=0, columnspan=3)
-        self.label_vies = tk.Label(self.root, text="Vies : 3", fg='white', bg='black')
+        self.label_vies = tk.Label(self.root, text="Vies : 3", fg='black', bg='white')
         self.label_vies.grid(row=0, column=1)
-        self.label_score = tk.Label(self.root, text="Score : 0", fg='white', bg='black')
+        self.label_score = tk.Label(self.root, text="Score : 0", fg='black', bg='white')
         self.label_score.grid(row=0, column=0)
         self.bouton_quitter = tk.Button(self.root, text="Quitter", command=self.root.destroy)
         self.bouton_quitter.grid(row=2, column=1)
@@ -34,7 +34,7 @@ class Casse_briques:
         couleurs = ["red", "orange", "yellow", "green"]
         for i in range(5):
             for j in range(10):
-                brique = Brique(self.canvas, 10+j*85, 30+i*25, 80, 20, random.choice(couleurs))
+                brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 83, 23, random.choice(couleurs))
                 self.briques.append(brique)
 
     def verifier_collision(self, obj):
@@ -58,6 +58,7 @@ class Casse_briques:
         # Collision avec le pad
         if self.verifier_collision(self.pad):
             self.balle.inverser_vy()
+            self.balle.augmenter_vitesse()
 
         # Collision avec les briques
         for brique in self.briques[:]:
@@ -72,7 +73,7 @@ class Casse_briques:
         if self.balle.coords()[3] >= self.canvas.winfo_height():
             self.vies -= 1
             self.label_vies.config(text=f"Vies : {self.vies}")
-            if self.vies > 0:
+            if self.vies > -1:
                 # Remettre la balle au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
                 self.balle.vx = 5*(1+random.random())  # Vitesse horizontale aléatoire
