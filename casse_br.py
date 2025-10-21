@@ -15,12 +15,12 @@ class Casse_briques:
         self.label_vies.grid(row = 0, column = 1)
         self.label_score = tk.Label(self.root, text = "Score : 0", fg = 'black', bg = 'white')
         self.label_score.grid(row = 0, column = 0)
-        self.bouton_rejouer = tk.Button(self.root, text = "Rejouer", command = self.rejouer)
-        self.bouton_rejouer.grid(row = 3, column = 0)
-        self.bouton_quitter = tk.Button(self.root, text = "Quitter", command = self.root.destroy)
-        self.bouton_quitter.grid(row = 3, column = 1)
-        self.bouton_jouer = tk.Button(self.root, text = "Jouer", command = self.jouer)
-        self.bouton_jouer.grid(row = 3, column = 2)
+        self.bouton_rejouer = tk.Button(self.root, text = "Rejouer", command = self.rejouer, fg = 'white', bg = "#FF00E6")
+        self.bouton_rejouer.grid(row = 6, column = 0)
+        self.bouton_quitter = tk.Button(self.root, text = "Quitter", command = self.root.destroy, fg = 'white', bg = "#FF00E6")
+        self.bouton_quitter.grid(row = 6, column = 1)
+        self.bouton_jouer = tk.Button(self.root, text = "Jouer", command = self.jouer, fg = 'white', bg = "#FF00E6")
+        self.bouton_jouer.grid(row = 6, column = 2)
 
         # Initialisation jeu
         self.vies = 3
@@ -59,7 +59,8 @@ class Casse_briques:
 
     def jouer(self):
         self.balle.deplacer()
-        # Collision avec le pad
+                
+        # Collision avec le pad     
         if self.verifier_collision(self.pad):
             self.balle.inverser_vy()
             self.balle.augmenter_vitesse()
@@ -83,10 +84,10 @@ class Casse_briques:
                 self.balle.vx = 2.5 * (1 + random.random())  # Vitesse horizontale aléatoire
                 self.balle.vy = -2.5 * (1 + random.random()) # Vitesse verticale aléatoire
             elif self.score == 500:
-                self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
+                self.message_1 = self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
                 return
             else:
-                self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
+                self.message_2 = self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
                 return
 
         # Relancer la boucle
@@ -110,8 +111,15 @@ class Casse_briques:
         self.briques.clear()
         self.creer_briques()
 
-if __name__ == "__main__":
-    app = Casse_briques()
+        # Effacer le message de victoire ou défaite
+        if hasattr(self, 'message_1'):
+            self.canvas.delete(self.message_1)
+            del self.message_1
+        if hasattr(self, 'message_2'):
+            self.canvas.delete(self.message_2)
+            del self.message_2
 
+if __name__ == "__main__" :
+    app = Casse_briques()
 
 
