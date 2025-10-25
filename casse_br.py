@@ -36,10 +36,10 @@ class Casse_briques:
         self.root.mainloop()
 
     def creer_briques(self):
-        couleurs = ["red", "orange", "yellow", "green", "blue"]
+        couleurs = ["red", "blue", "green", "purple", "yellow"]
         for i in range(5):
             for j in range(10):
-                brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 80, 20, random.choice(couleurs))
+                brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 80, 20, couleurs[i])
                 self.briques.append(brique)
 
     def verifier_collision(self, obj):
