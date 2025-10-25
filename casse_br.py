@@ -70,7 +70,7 @@ class Casse_briques:
 
         if chevauch_x > 0 and chevauch_y > 0:
             # collision détectée ; déterminer l'axe principal de pénétration
-            # si la pénétration en x est plus petite, la collision est latérale (inverser vx)
+            # si la pénétration en x est plus petite, la collision est latérale (inverser vx) (marche pour les rectangles de petite largeur)
             if chevauch_x < chevauch_y:
                 return True, 'x'
             else:
@@ -82,8 +82,14 @@ class Casse_briques:
         
         self.balle.deplacer()
         # Collision avec le pad
-        if self.verifier_collision(self.pad):
-            self.balle.inverser_vy()
+        collision, axis = self.verifier_collision(self.pad)
+        if collision:
+            # inverser la composante selon l'axe détecté
+            if axis == 'x':
+                self.balle.inverser_vx()
+            else:
+                self.balle.inverser_vy()
+            # légèrement augmenter la vitesse après contact
             self.balle.augmenter_vitesse()
 
         # Collision avec les briques
