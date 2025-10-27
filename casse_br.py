@@ -17,7 +17,7 @@ class Casse_briques:
         self.label_score.grid(row = 0, column = 0)
         self.label_meilleur_score = tk.Label(self.root, text = "Meilleur score : 0", fg = 'black', bg = 'white')
         self.label_meilleur_score.grid(row = 0, column = 1)
-        self.scores_precedents = []  # File pour stocker les scores et afficher le meilleur
+        self.scores_precedents = []  # pile pour stocker les scores et afficher le meilleur
         self.bouton_rejouer = tk.Button(self.root, text = "Rejouer", command = self.rejouer, fg = 'white', bg = "#FF00E6")
         self.bouton_rejouer.grid(row = 6, column = 0)
         self.bouton_quitter = tk.Button(self.root, text = "Quitter", command = self.root.destroy, fg = 'white', bg = "#FF00E6")
@@ -130,7 +130,7 @@ class Casse_briques:
         self.root.after(10, self.jouer) #on relance la boucle
 
     def sauvegarder_score(self):
-        self.scores_precedents.append(self.score) # on ajoute le score actuel à la file
+        self.scores_precedents.append(self.score) # on ajoute le score actuel à la pile
         if len(self.scores_precedents) > 15: # on garde seulement les 15 derniers scores pour la mémoire
             self.scores_precedents.pop(0)
         meilleur_score = max(self.scores_precedents)# le meilleur score est mis à jour
