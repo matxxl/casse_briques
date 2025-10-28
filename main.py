@@ -110,16 +110,16 @@ class Casse_briques:
                 self.label_vies.config(text = "Vies : 0")
             
             
-            
-            if self.vies >= 0 :
+            if self.score == 500:  #message de victoire en cas de score égal à 500
+                self.message_1 = self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
+                self.sauvegarder_score()
+                return
+            elif self.vies >= 0 :
                 # la balle se remet au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
                 self.balle.vx = 2.5 * (1 + random.random())  # Vitesse horizontale aléatoire
                 self.balle.vy = -2.5 * (1 + random.random()) # Vitesse verticale aléatoire
-            elif self.score == 500:  #message de victoire en cas de score égal à 500
-                self.message_1 = self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
-                self.sauvegarder_score()
-                return
+            
             else:
                 self.label_vies.config(text = "Vies : 0")
                 self.message_2 = self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
