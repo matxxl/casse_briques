@@ -6,7 +6,20 @@ from pad import *
 from brique import *
 
 class Casse_briques:
+    
+
     def __init__(self):                    #on initialise la fenêtre, l'affichage et les boutons
+        """
+        Entrée :
+            (aucune)
+        Sortie :
+            None
+        description de la fonction :
+            Initialise l'interface Tkinter (fenêtre, canevas, labels, boutons),
+            crée les objets du jeu (balle, raquette, briques) et démarre la boucle
+            principale Tkinter (self.root.mainloop()).
+        """
+        
         self.root = tk.Tk()                # on crée la racine de la fenêtre
         self.root.title("Casse Briques")
         self.canvas = tk.Canvas(self.root, width = 900, height = 500, bg = 'black')     #on crée la fenêtre
@@ -38,15 +51,39 @@ class Casse_briques:
                 self.jouer()
         self.root.mainloop()
 
+
+
+
     def creer_briques(self):
+        """
+        Entrée :
+            (aucune)
+        Sortie :
+            None
+        description de la fonction :
+            Crée un ensemble de briques disposées en grille (5 lignes x 10 colonnes)
+            et les ajoute à self.briques.
+        """
         couleurs = ["red", "blue", "yellow", "green", "white"]
         for i in range(5):
             for j in range(10):
                 brique = Brique(self.canvas, 10 + j * 85, 30 + i * 25, 80, 20, couleurs[i])
                 self.briques.append(brique)
 
+
+
     def verifier_collision(self, obj):
-        
+        """
+        Entrée :
+            obj : instance ayant une méthode coords() renvoyant [x1,y1,x2,y2]
+        Sortie :
+            tuple(bool, str|None) : (True, 'x'|'y') si collision détectée et
+            axe principal de pénétration, sinon (False, None).
+        description de la fonction :
+            Détecte la collision entre la balle (modélisée par son centre et
+            son rayon) et un rectangle axis-aligned. Calcule le chevauchement
+            sur les axes pour décider quelle composante de vitesse inverser.
+        """
         x1, y1, x2, y2 = self.balle.coords()        #on récupère les coordonnées de la balle
         rayon = self.balle.rayon
 
@@ -77,7 +114,19 @@ class Casse_briques:
         return False, None
 
 
+
     def jouer(self):
+        """
+        Entrée :
+            (aucune)
+        Sortie :
+            None
+        description de la fonction :
+            Boucle principale du jeu (appelée périodiquement). Déplace la balle,
+            gère les collisions avec la raquette et les briques, met à jour le
+            score et les vies, gère les conditions de victoire/défaite et
+            planifie l'appel suivant via self.root.after.
+        """
         
         self.balle.deplacer()
         collision, axis = self.verifier_collision(self.pad) # on vérifie s'il y a collision avec le pad
@@ -103,9 +152,11 @@ class Casse_briques:
 
         # Cas où la balle tombe
         if self.balle.coords()[3] >= self.canvas.winfo_height(): #coordonnée y2 (le bas de la balle) sort du canevas
+            
             if self.vies >= 0 :                     # Mettre à jour le compteur
                 self.vies -= 1
                 self.label_vies.config(text = f"Vies : {self.vies}")
+           
             elif self.vies <= -1 :                  # Ne pas avoir un score négatif
                 self.label_vies.config(text = "Vies : 0")
             
@@ -114,29 +165,53 @@ class Casse_briques:
                 self.message_1 = self.canvas.create_text(450, 250, text = "Tu as gagné !", fill = "white", font = ("Helvetica", 30))
                 self.sauvegarder_score()
                 return
+            
             elif self.vies >= 0 :
                 # la balle se remet au centre
                 self.canvas.coords(self.balle.id, 440, 390, 460, 410)
                 self.balle.vx = 2.5 * (1 + random.random())  # Vitesse horizontale aléatoire
                 self.balle.vy = -2.5 * (1 + random.random()) # Vitesse verticale aléatoire
             
-            else:
+            else:   #le joueur a perdu
                 self.label_vies.config(text = "Vies : 0")
                 self.message_2 = self.canvas.create_text(450, 250, text = "Tu as perdu !", fill = "white", font = ("Helvetica", 30))
                 self.sauvegarder_score()
                 return
 
-    
         self.root.after(10, self.jouer) #on relance la boucle
 
+
+
     def sauvegarder_score(self):
+        """
+        Entrée :
+            (aucune) -- utilise self.score et self.scores_precedents
+        Sortie :
+            None
+        description de la fonction :
+            Ajoute le score courant à la liste des scores précédents (en
+            conservant au maximum 15 entrées) et met à jour l'affichage du
+            meilleur score.
+        """
         self.scores_precedents.append(self.score) # on ajoute le score actuel à la pile
         if len(self.scores_precedents) > 15: # on garde seulement les 15 derniers scores pour la mémoire
             self.scores_precedents.pop(0)
         meilleur_score = max(self.scores_precedents)# le meilleur score est mis à jour
         self.label_meilleur_score.config(text=f"Meilleur score : {meilleur_score}")
 
+
+
     def rejouer(self):
+        """
+        Entrée :
+            (aucune)
+        Sortie :
+            None
+        description de la fonction :
+            Réinitialise l'état du jeu pour une nouvelle partie : remets les
+            vies et le score, replace la balle au centre avec une vitesse
+            aléatoire, recrée les briques et supprime les messages de fin.
+        """
 
         # Réinitialisation des variables du jeu
         self.vies = 3
